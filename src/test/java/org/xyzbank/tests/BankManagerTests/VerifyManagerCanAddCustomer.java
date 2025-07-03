@@ -1,5 +1,6 @@
 package org.xyzbank.tests.BankManagerTests;
 
+import io.qameta.allure.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,35 +10,14 @@ import org.xyzbank.pages.AddCustomerPage;
 import org.xyzbank.pages.BankManagerDashboard;
 import org.xyzbank.tests.BaseTest;
 
-public class verifyManagerCanAddCustomer extends BaseTest {
+@Epic("Bank Manager Functionality")
+@Feature("Add Customer Feature")
+public class VerifyManagerCanAddCustomer extends BaseTest {
 
     @Test
-    public void testBankManagerFunctionality() {
-        BankManagerDashboard managerPage = loginPage.clickBankManagerLogin();
-
-
-//        // Add Customer
-//        String customerName = "John Doe";
-//        managerPage.addCustomer("John", "Doe", "12345");
-//
-//        // Verify customer added (assuming alert confirmation)
-//        driver.switchTo().alert().accept();
-//
-//        // Create Account
-//        managerPage.openAccount(customerName, "Dollar");
-//        driver.switchTo().alert().accept();
-//
-//        // Delete Customer
-//        managerPage.deleteCustomer(customerName);
-//
-//        // Verify deletion (assuming customer no longer appears in search)
-//        managerPage.customersTab.click();
-//        managerPage.searchCustomerInput.sendKeys(customerName);
-//        Assertions.assertFalse(driver.findElements(managerPage.deleteCustomerBtn.getLocator()).size() > 0);
-    }
-
-
-    @Test
+    @Story("Bank Manager adds a customer with valid details")
+    @Severity(SeverityLevel.CRITICAL)
+    @DisplayName("TC001: Verify manager can add customer with valid data")
     public void testTC001_AddCustomerWithValidData() {
         BankManagerDashboard managerPage = loginPage.clickBankManagerLogin();
         AddCustomerPage addCustomerForm = managerPage.goToAddCustomer();
@@ -48,6 +28,8 @@ public class verifyManagerCanAddCustomer extends BaseTest {
     }
 
     @Test
+    @Story("Input validation: Customer name with numbers")
+    @Severity(SeverityLevel.NORMAL)
     @DisplayName("TC002: Verify adding customer with invalid name (numbers)")
     public void testTC002_AddCustomerWithInvalidNameNumbers() {
         BankManagerDashboard managerPage = loginPage.clickBankManagerLogin();
@@ -59,6 +41,8 @@ public class verifyManagerCanAddCustomer extends BaseTest {
     }
 
     @Test
+    @Story("Input validation: Customer name with special characters")
+    @Severity(SeverityLevel.NORMAL)
     @DisplayName("TC003: Verify adding customer with invalid name (special characters)")
     public void testTC003_AddCustomerWithInvalidNameSpecial() {
         BankManagerDashboard managerPage = loginPage.clickBankManagerLogin();
@@ -70,6 +54,8 @@ public class verifyManagerCanAddCustomer extends BaseTest {
     }
 
     @Test
+    @Story("Input validation: Postal code must be numeric")
+    @Severity(SeverityLevel.NORMAL)
     @DisplayName("TC004: Verify adding customer with invalid postal code")
     public void testTC004_AddCustomerWithInvalidPostalCode() {
         BankManagerDashboard managerPage = loginPage.clickBankManagerLogin();
@@ -81,12 +67,13 @@ public class verifyManagerCanAddCustomer extends BaseTest {
     }
 
     @Test
+    @Story("Input validation: All fields empty")
+    @Severity(SeverityLevel.CRITICAL)
     @DisplayName("TC005: Verify adding customer with empty fields")
     public void testTC005_AddCustomerWithEmptyFields() {
         BankManagerDashboard managerPage = loginPage.clickBankManagerLogin();
         AddCustomerPage addCustomerForm = managerPage.goToAddCustomer();
 
-        // Try to submit the form with all empty fields
         addCustomerForm.addCustomer("", "", "");
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -107,9 +94,4 @@ public class verifyManagerCanAddCustomer extends BaseTest {
         Assertions.assertTrue(lastNameMessage.toLowerCase().contains("fill out this field"));
         Assertions.assertTrue(postCodeMessage.toLowerCase().contains("fill out this field"));
     }
-
-
-
-
-
 }

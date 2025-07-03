@@ -10,7 +10,7 @@ import org.xyzbank.tests.BaseTest;
 import io.qameta.allure.*;
 
 @Epic("Customer Banking")
-@Feature("Deposit Functionality")
+@Feature("Transaction Functionality")
 public class VerifyCustomersCantEditTransactions extends BaseTest {
 
     @Story("Customer cannot deposit negative amount")
