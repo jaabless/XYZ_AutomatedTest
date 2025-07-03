@@ -40,6 +40,12 @@ jobs:
         id: run-tests
         run: mvn clean test -B
 
+
+  notify:
+    needs: build-and-test
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
       - name: Set custom message
         id: set-message
         run: |
@@ -47,14 +53,8 @@ jobs:
             printf "message=%s\n" "✅ All tests passed successfully for $GITHUB_REPOSITORY on branch $GITHUB_REF" >> $GITHUB_OUTPUT
           else
             printf "message=%s\n" "❌ Some tests failed in $GITHUB_REPOSITORY on branch $GITHUB_REF" >> $GITHUB_OUTPUT
-          fi
+          fi  
 
-
-  notify:
-    needs: build-and-test
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
       - name: Send Slack Notification
         uses: 8398a7/action-slack@v3
         with:
