@@ -38,7 +38,7 @@ jobs:
 
       - name: Run Maven tests
         id: run-tests
-        run:
+        run: mvn clean test -B
 
       - name: Set custom message
         id: set-message
