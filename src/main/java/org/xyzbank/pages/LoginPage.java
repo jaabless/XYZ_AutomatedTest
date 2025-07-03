@@ -3,8 +3,12 @@ package org.xyzbank.pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.xyzbank.pages.Customer.CustomerLoginPage;
 
 public class LoginPage extends BasePage{
+
+    @FindBy(xpath = "//button[normalize-space()='Home']")
+    private WebElement homeBtn;
 
     @FindBy(xpath = "//button[contains(text(), 'Bank Manager Login')]")
     private WebElement bankManagerLoginBtn;
@@ -21,8 +25,12 @@ public class LoginPage extends BasePage{
         return new BankManagerDashboard(driver);
     }
 
-//    public CustomerLoginPage clickCustomerLogin() {
-//        customerLoginBtn.click();
-//        return new CustomerLoginPage(driver);
-//    }
+    public CustomerLoginPage clickCustomerLogin() {
+        customerLoginBtn.click();
+        return new CustomerLoginPage(driver);
+    }
+
+    public void goToHome() {
+        homeBtn.click();
+    }
 }
