@@ -9,6 +9,8 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    outputs:
+      message: ${{ steps.set-message.outputs.message }}
 
     steps:
       - name: Checkout code
@@ -35,7 +37,18 @@ jobs:
             ${{ runner.os }}-maven
 
       - name: Run Maven tests
+        id: run-tests
         run: mvn clean test -B
+
+      - name: Set custom message
+        id: set-message
+        run: |
+          if [[ "${{ job.status }}" == "success" ]]; then
+            echo "✅ All tests passed successfully for $GITHUB_REPOSITORY on branch $GITHUB_REF" >> $GITHUB_OUTPUT
+            echo "message=✅ All tests passed successfully for $GITHUB_REPOSITORY on branch $GITHUB_REF" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Some tests failed in $GITHUB_REPOSITORY on branch $GITHUB_REF" >> $GITHUB_OUTPUT
+            echo "message=❌ Some tests failed in $GITHUB_REPOSITORY on branch $GITHUB_REF" >> $GITHUB_OUTPUT
 
   notify:
     needs: build-and-test
@@ -46,7 +59,7 @@ jobs:
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
-          text: ${{ steps.slack-message.outputs.message }}
+          text: ${{ needs.build-and-test.outputs.message }}
           fields: repo,message,commit,author,action,eventName,ref
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.NEWSLETTER_CHANNEL }}
