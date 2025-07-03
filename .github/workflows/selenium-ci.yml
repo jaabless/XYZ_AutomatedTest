@@ -44,11 +44,11 @@ jobs:
         id: set-message
         run: |
           if [[ "${{ job.status }}" == "success" ]]; then
-            echo "✅ All tests passed successfully for $GITHUB_REPOSITORY on branch $GITHUB_REF" >> $GITHUB_OUTPUT
-            echo "message=✅ All tests passed successfully for $GITHUB_REPOSITORY on branch $GITHUB_REF" >> $GITHUB_OUTPUT
+            echo "All tests passed successfully for $GITHUB_REPOSITORY on branch $GITHUB_REF" >> $GITHUB_OUTPUT
+            echo "message= All tests passed successfully for $GITHUB_REPOSITORY on branch $GITHUB_REF" >> $GITHUB_OUTPUT
           else
-            echo "❌ Some tests failed in $GITHUB_REPOSITORY on branch $GITHUB_REF" >> $GITHUB_OUTPUT
-            echo "message=❌ Some tests failed in $GITHUB_REPOSITORY on branch $GITHUB_REF" >> $GITHUB_OUTPUT
+            echo "Some tests failed in $GITHUB_REPOSITORY on branch $GITHUB_REF" >> $GITHUB_OUTPUT
+            echo "message= Some tests failed in $GITHUB_REPOSITORY on branch $GITHUB_REF" >> $GITHUB_OUTPUT
           fi
 
   notify:
