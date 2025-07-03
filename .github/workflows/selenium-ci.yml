@@ -49,6 +49,7 @@ jobs:
           else
             echo "❌ Some tests failed in $GITHUB_REPOSITORY on branch $GITHUB_REF" >> $GITHUB_OUTPUT
             echo "message=❌ Some tests failed in $GITHUB_REPOSITORY on branch $GITHUB_REF" >> $GITHUB_OUTPUT
+          fi
 
   notify:
     needs: build-and-test
