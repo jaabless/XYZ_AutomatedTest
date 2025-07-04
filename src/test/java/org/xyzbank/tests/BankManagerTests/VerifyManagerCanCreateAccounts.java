@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.xyzbank.pages.BankManagerDashboard;
 import org.xyzbank.pages.OpenAccountPage;
 import org.xyzbank.tests.BaseTest;
+import org.xyzbank.tests.TestData.ManagerTestData;
 
 @Epic("Bank Manager Functionality")
 @Feature("Open Bank Account Feature")
@@ -19,7 +20,7 @@ public class VerifyManagerCanCreateAccounts extends BaseTest {
     public void testTC006_CreateAccountForExistingCustomer() {
         BankManagerDashboard managerPage = loginPage.clickBankManagerLogin();
         OpenAccountPage openAccountPage = managerPage.goToOpenAccount();
-        openAccountPage.openAccount("Harry Potter", "Dollar");
+        openAccountPage.openAccount(ManagerTestData.EXISTING_CUSTOMER_NAME, ManagerTestData.CURRENCY_DOLLAR);
         String actualResult = driver.switchTo().alert().getText();
         driver.switchTo().alert().accept();
         System.out.println("Alert Message: " + actualResult);
@@ -33,11 +34,11 @@ public class VerifyManagerCanCreateAccounts extends BaseTest {
     public void testTC007_CreateAccountForNonExistingCustomer() {
         BankManagerDashboard managerPage = loginPage.clickBankManagerLogin();
         OpenAccountPage openAccountPage = managerPage.goToOpenAccount();
-        openAccountPage.openAccount("Non Existing", "Dollar");
+        openAccountPage.openAccount(ManagerTestData.NON_EXISTING_CUSTOMER, ManagerTestData.CURRENCY_DOLLAR);
         String actualResult = driver.switchTo().alert().getText();
         driver.switchTo().alert().accept();
         System.out.println("Alert Message: " + actualResult);
-        Assertions.assertTrue(actualResult.contains("Account created successfully with account Number"));
+        Assertions.assertTrue(actualResult.contains("Account created successfully with account Number"), "Cannot Create Account for Non-Existing Customer");
         // 🔁 Adjust the assertion above if app behavior is supposed to block non-existent users
     }
 }

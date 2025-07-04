@@ -8,6 +8,7 @@ import org.xyzbank.pages.BankManagerDashboard;
 import org.xyzbank.pages.Customer.CustomerLoginPage;
 import org.xyzbank.pages.ViewCustomersPage;
 import org.xyzbank.tests.BaseTest;
+import org.xyzbank.tests.TestData.ManagerTestData;
 
 @Epic("Bank Manager Functionality")
 @Feature("Delete Customer Account")
@@ -20,8 +21,8 @@ public class VerifyManagerCanDeleteAccount extends BaseTest {
     public void testTC009_ManagerCanDeleteAccount() {
         BankManagerDashboard managerPage = loginPage.clickBankManagerLogin();
         ViewCustomersPage customersTable = managerPage.goToCustomersTable();
-        Assertions.assertTrue(customersTable.isCustomerPresent("Harry"), "Customer should be listed before deletion");
-        customersTable.deleteCustomer("Harry");
+        Assertions.assertTrue(customersTable.isCustomerPresent(ManagerTestData.DEL_CUSTOMER_NAME), "Customer should be listed before deletion");
+        customersTable.deleteCustomer(ManagerTestData.DEL_CUSTOMER_NAME);
         Assertions.assertFalse(customersTable.isCustomerPresent("Harry"), "Customer should be removed after deletion");
     }
 
@@ -31,6 +32,6 @@ public class VerifyManagerCanDeleteAccount extends BaseTest {
     @DisplayName("TC010: Verify customer cannot access deleted account")
     public void testTC010_CustomerCannotAccessDeletedAccount() {
         CustomerLoginPage customerLoginPage = loginPage.clickCustomerLogin();
-        Assertions.assertFalse(customerLoginPage.isCustomerSelectable("New Customer"), "Customer cannot be found after deletion");
+        Assertions.assertFalse(customerLoginPage.isCustomerSelectable(ManagerTestData.NON_EXISTING_CUSTOMER), "Customer cannot be found after deletion");
     }
 }

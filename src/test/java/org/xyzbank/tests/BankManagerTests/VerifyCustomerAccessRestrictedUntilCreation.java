@@ -4,13 +4,12 @@ import io.qameta.allure.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
 import org.xyzbank.pages.AddCustomerPage;
 import org.xyzbank.pages.BankManagerDashboard;
 import org.xyzbank.pages.Customer.CustomerDashboardPage;
 import org.xyzbank.pages.Customer.CustomerLoginPage;
 import org.xyzbank.tests.BaseTest;
+import org.xyzbank.tests.TestData.ManagerTestData;
 
 @Epic("Bank Manager Functionality")
 @Feature("Customer Access Control")
@@ -23,11 +22,11 @@ public class VerifyCustomerAccessRestrictedUntilCreation extends BaseTest {
     public void testTC008_CustomerCannotAccessBeforeCreation() {
         BankManagerDashboard managerPage = loginPage.clickBankManagerLogin();
         AddCustomerPage addCustomerForm = managerPage.goToAddCustomer();
-        addCustomerForm.addCustomer("New", "Customer", "12345");
+        addCustomerForm.addCustomer(ManagerTestData.NEW_CUSTOMER_FIRST_NAME, ManagerTestData.NEW_CUSTOMER_LAST_NAME, ManagerTestData.NEW_CUSTOMER_POSTAL_CODE);
         driver.switchTo().alert().accept();
         loginPage.goToHome();
         CustomerLoginPage customerLoginPage = loginPage.clickCustomerLogin();
-        customerLoginPage.loginAsCustomer("New Customer");
+        customerLoginPage.loginAsCustomer(ManagerTestData.NEW_CUSTOMER_NAME);
         CustomerDashboardPage customerDashboardPage = new CustomerDashboardPage(driver);
         String actualResult = customerDashboardPage.getNoAccountMessage();
         Assertions.assertTrue(actualResult.contains("Please open an account with us."),

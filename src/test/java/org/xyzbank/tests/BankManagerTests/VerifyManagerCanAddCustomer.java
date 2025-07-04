@@ -9,6 +9,8 @@ import org.openqa.selenium.WebElement;
 import org.xyzbank.pages.AddCustomerPage;
 import org.xyzbank.pages.BankManagerDashboard;
 import org.xyzbank.tests.BaseTest;
+import org.xyzbank.tests.TestData.CustomerTestData;
+import org.xyzbank.tests.TestData.ManagerTestData;
 
 @Epic("Bank Manager Functionality")
 @Feature("Add Customer Feature")
@@ -21,7 +23,7 @@ public class VerifyManagerCanAddCustomer extends BaseTest {
     public void testTC001_AddCustomerWithValidData() {
         BankManagerDashboard managerPage = loginPage.clickBankManagerLogin();
         AddCustomerPage addCustomerForm = managerPage.goToAddCustomer();
-        addCustomerForm.addCustomer("New", "Mensah", "12345");
+        addCustomerForm.addCustomer(ManagerTestData.NEW_CUSTOMER_FIRST_NAME, ManagerTestData.NEW_CUSTOMER_LAST_NAME,ManagerTestData.NEW_CUSTOMER_POSTAL_CODE);
         String actualResult = driver.switchTo().alert().getText();
         driver.switchTo().alert().accept();
         Assertions.assertTrue(actualResult.contains("Customer added successfully"));
@@ -34,7 +36,7 @@ public class VerifyManagerCanAddCustomer extends BaseTest {
     public void testTC002_AddCustomerWithInvalidNameNumbers() {
         BankManagerDashboard managerPage = loginPage.clickBankManagerLogin();
         AddCustomerPage addCustomerForm = managerPage.goToAddCustomer();
-        addCustomerForm.addCustomer("Kwame01", "Mensah", "12345");
+        addCustomerForm.addCustomer(ManagerTestData.NUMERIC_FIRST_NAME, ManagerTestData.NEW_CUSTOMER_LAST_NAME,ManagerTestData.NEW_CUSTOMER_POSTAL_CODE);
         String actualResult = driver.switchTo().alert().getText();
         driver.switchTo().alert().accept();
         Assertions.assertEquals("Name must contain only alphabetic characters", actualResult);
@@ -47,7 +49,7 @@ public class VerifyManagerCanAddCustomer extends BaseTest {
     public void testTC003_AddCustomerWithInvalidNameSpecial() {
         BankManagerDashboard managerPage = loginPage.clickBankManagerLogin();
         AddCustomerPage addCustomerForm = managerPage.goToAddCustomer();
-        addCustomerForm.addCustomer("Kwame@", "Mensah", "12345");
+        addCustomerForm.addCustomer(ManagerTestData.SPECIAL_CHAR_FIRST_NAME, ManagerTestData.NEW_CUSTOMER_LAST_NAME,ManagerTestData.NEW_CUSTOMER_POSTAL_CODE);
         String actualResult = driver.switchTo().alert().getText();
         driver.switchTo().alert().accept();
         Assertions.assertEquals("Name must contain only alphabetic characters", actualResult);
@@ -60,7 +62,7 @@ public class VerifyManagerCanAddCustomer extends BaseTest {
     public void testTC004_AddCustomerWithInvalidPostalCode() {
         BankManagerDashboard managerPage = loginPage.clickBankManagerLogin();
         AddCustomerPage addCustomerForm = managerPage.goToAddCustomer();
-        addCustomerForm.addCustomer("Kwame", "Mensah", "ABCD");
+        addCustomerForm.addCustomer(ManagerTestData.NEW_CUSTOMER_FIRST_NAME, ManagerTestData.NEW_CUSTOMER_LAST_NAME, ManagerTestData.INVALID_POSTAL_CODE);
         String actualResult = driver.switchTo().alert().getText();
         driver.switchTo().alert().accept();
         Assertions.assertEquals("Postal code must contain only numeric characters", actualResult);
@@ -74,10 +76,8 @@ public class VerifyManagerCanAddCustomer extends BaseTest {
         BankManagerDashboard managerPage = loginPage.clickBankManagerLogin();
         AddCustomerPage addCustomerForm = managerPage.goToAddCustomer();
 
-        addCustomerForm.addCustomer("", "", "");
-
+        addCustomerForm.addCustomer(ManagerTestData.BLANK_CUSTOMER_NAME, ManagerTestData.BLANK_CUSTOMER_NAME,ManagerTestData.BLANK_POSTAL_CODE);
         JavascriptExecutor js = (JavascriptExecutor) driver;
-
         WebElement firstNameField = addCustomerForm.getFirstNameField();
         WebElement lastNameField = addCustomerForm.getLastNameField();
         WebElement postCodeField = addCustomerForm.getPostCodeField();
