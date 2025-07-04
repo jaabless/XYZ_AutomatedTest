@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.xyzbank.pages.Customer.CustomerLoginPage;
+import org.xyzbank.tests.TestData.CustomerTestData;
 
 @Epic("Customer Banking")
 @Feature("Deposit Functionality")
@@ -18,9 +19,9 @@ public class VerifyCustomerCanDeposit extends BaseTest {
     @DisplayName("TC013: Verify customer can make a deposit with valid amount")
     public void testTC013_DepositValidAmount() {
         CustomerLoginPage customerLoginPage = stepClickCustomerLogin();
-        CustomerDashboardPage accountPage = stepLoginAsCustomer(customerLoginPage, "Hermoine Granger");
+        CustomerDashboardPage accountPage = stepLoginAsCustomer(customerLoginPage, CustomerTestData.EXISTING_CUSTOMER_NAME);
 
-        accountPage.deposit(50);
+        accountPage.deposit(CustomerTestData.VALID_DEPOSIT_AMOUNT);
         String actualResult = accountPage.getSuccessMessage();
 
         Assertions.assertTrue(actualResult.contains("Deposit Successful"),
@@ -33,10 +34,11 @@ public class VerifyCustomerCanDeposit extends BaseTest {
     @DisplayName("TC014: Verify customer cannot make a deposit with negative amount")
     public void testTC014_DepositNegativeAmount() {
         CustomerLoginPage customerLoginPage = stepClickCustomerLogin();
-        CustomerDashboardPage accountPage = stepLoginAsCustomer(customerLoginPage, "Hermoine Granger");
+        CustomerDashboardPage accountPage = stepLoginAsCustomer(customerLoginPage, CustomerTestData.EXISTING_CUSTOMER_NAME);
+
 
         int initialBalance = accountPage.getNumericBalance();
-        accountPage.deposit(-50);
+        accountPage.deposit(CustomerTestData.NEGATIVE_DEPOSIT_AMOUNT);
         int updatedBalance = accountPage.getNumericBalance();
 
         Assertions.assertEquals(initialBalance, updatedBalance, "Balance should not change after negative deposit");
@@ -48,10 +50,11 @@ public class VerifyCustomerCanDeposit extends BaseTest {
     @DisplayName("TC015: Verify customer cannot make a deposit with zero amount")
     public void testTC015_DepositZeroAmount() {
         CustomerLoginPage customerLoginPage = stepClickCustomerLogin();
-        CustomerDashboardPage accountPage = stepLoginAsCustomer(customerLoginPage, "Hermoine Granger");
+        CustomerDashboardPage accountPage = stepLoginAsCustomer(customerLoginPage, CustomerTestData.EXISTING_CUSTOMER_NAME);
+
 
         int initialBalance = accountPage.getNumericBalance();
-        accountPage.deposit(0);
+        accountPage.deposit(CustomerTestData.ZERO_DEPOSIT_AMOUNT);
         int updatedBalance = accountPage.getNumericBalance();
 
         Assertions.assertEquals(initialBalance, updatedBalance, "Balance should not change after '0' deposit");
@@ -63,10 +66,11 @@ public class VerifyCustomerCanDeposit extends BaseTest {
     @DisplayName("TC016: Verify account balance updates after a deposit")
     public void testTC016_AccountBalanceUpdatesAfterDeposit() {
         CustomerLoginPage customerLoginPage = stepClickCustomerLogin();
-        CustomerDashboardPage accountPage = stepLoginAsCustomer(customerLoginPage, "Hermoine Granger");
+        CustomerDashboardPage accountPage = stepLoginAsCustomer(customerLoginPage, CustomerTestData.EXISTING_CUSTOMER_NAME);
+
 
         int initialBalance = accountPage.getNumericBalance();
-        accountPage.deposit(50);
+        accountPage.deposit(CustomerTestData.VALID_DEPOSIT_AMOUNT);
         accountPage.waitForBalanceToUpdate(initialBalance);
 
         int updatedBalance = accountPage.getNumericBalance();

@@ -8,6 +8,7 @@ import org.xyzbank.pages.Customer.CustomerLoginPage;
 import org.xyzbank.pages.Customer.CustomerTransactionsPage;
 import org.xyzbank.tests.BaseTest;
 import io.qameta.allure.*;
+import org.xyzbank.tests.TestData.CustomerTestData;
 
 @Epic("Customer Banking")
 @Feature("Transaction Functionality")
@@ -19,7 +20,7 @@ public class VerifyCustomersCantEditTransactions extends BaseTest {
     @DisplayName("TC011: Verify customer can view recent transactions")
     public void testTC011_ResetTransactions() {
         CustomerLoginPage customerLoginPage = loginPage.clickCustomerLogin();
-        CustomerDashboardPage accountPage = customerLoginPage.loginAsCustomer("Hermoine Granger");
+        CustomerDashboardPage accountPage = customerLoginPage.loginAsCustomer(CustomerTestData.EXISTING_CUSTOMER_NAME);
         CustomerTransactionsPage customerTransactionsPage = accountPage.viewTransactions();
         customerTransactionsPage.resetTransactions();
         Assertions.assertTrue(customerTransactionsPage.isTransactionTableDisplayed(), "Recent transactions are displayed with details (Date, Amount, Transaction Type)");

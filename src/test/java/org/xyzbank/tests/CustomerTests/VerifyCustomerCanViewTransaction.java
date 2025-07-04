@@ -8,6 +8,7 @@ import org.xyzbank.pages.Customer.CustomerDashboardPage;
 import org.xyzbank.pages.Customer.CustomerLoginPage;
 import org.xyzbank.pages.Customer.CustomerTransactionsPage;
 import org.xyzbank.tests.BaseTest;
+import org.xyzbank.tests.TestData.CustomerTestData;
 
 @Epic("Customer Banking")
 @Feature("Transaction Viewing")
@@ -19,7 +20,7 @@ public class VerifyCustomerCanViewTransaction extends BaseTest {
     @DisplayName("TC011: Verify customer can view recent transactions")
     public void testTC011_ViewRecentTransactions() {
         CustomerLoginPage customerLoginPage = loginPage.clickCustomerLogin();
-        CustomerDashboardPage accountPage = customerLoginPage.loginAsCustomer("Hermoine Granger");
+        CustomerDashboardPage accountPage = customerLoginPage.loginAsCustomer(CustomerTestData.EXISTING_CUSTOMER_NAME);
         CustomerTransactionsPage customerTransactionsPage = accountPage.viewTransactions();
 
         Assertions.assertTrue(
@@ -38,7 +39,7 @@ public class VerifyCustomerCanViewTransaction extends BaseTest {
     @DisplayName("TC012: Verify customer can view transactions with no history")
     public void testTC012_ViewTransactionsWithNoHistory() {
         CustomerLoginPage customerLoginPage = loginPage.clickCustomerLogin();
-        CustomerDashboardPage accountPage = customerLoginPage.loginAsCustomer("Neville Longbottom");
+        CustomerDashboardPage accountPage = customerLoginPage.loginAsCustomer(CustomerTestData.CUSTOMER_NAME_TRANSACTION);
         CustomerTransactionsPage customerTransactionsPage = accountPage.viewTransactions();
 
         Assertions.assertTrue(
