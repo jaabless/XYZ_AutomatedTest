@@ -23,13 +23,5 @@ public class ManagerTestData {
 
     public static final String CURRENCY_DOLLAR = "Dollar";
     // Add more test data as needed
-    public static final String INVALID_CUSTOMER_NAME = "Invalid Customer";
-    public static final int VALID_WITHDRAW_AMOUNT = 50;
-    public static final int NEGATIVE_WITHDRAW_AMOUNT = -50;
-    public static final int ZERO_WITHDRAW_AMOUNT = 0;
-    public static final int VALID_DEPOSIT_AMOUNT = 50;
-    public static final int NEGATIVE_DEPOSIT_AMOUNT = -50;
-    public static final int ZERO_DEPOSIT_AMOUNT = 0;
-    public static final int OVERDRAFT_AMOUNT = 10000;
 
 }
