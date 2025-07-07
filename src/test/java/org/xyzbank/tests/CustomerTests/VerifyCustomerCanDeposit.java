@@ -36,10 +36,11 @@ public class VerifyCustomerCanDeposit extends BaseTest {
         CustomerLoginPage customerLoginPage = stepClickCustomerLogin();
         CustomerDashboardPage accountPage = stepLoginAsCustomer(customerLoginPage, CustomerTestData.EXISTING_CUSTOMER_NAME);
 
-
         int initialBalance = accountPage.getNumericBalance();
+        System.out.println("Initial Balance: " + initialBalance);
         accountPage.deposit(CustomerTestData.NEGATIVE_DEPOSIT_AMOUNT);
         int updatedBalance = accountPage.getNumericBalance();
+        System.out.println("Updated Balance: " + updatedBalance);
 
         Assertions.assertEquals(initialBalance, updatedBalance, "Balance should not change after negative deposit");
     }
@@ -51,12 +52,12 @@ public class VerifyCustomerCanDeposit extends BaseTest {
     public void testTC015_DepositZeroAmount() {
         CustomerLoginPage customerLoginPage = stepClickCustomerLogin();
         CustomerDashboardPage accountPage = stepLoginAsCustomer(customerLoginPage, CustomerTestData.EXISTING_CUSTOMER_NAME);
-
-
+        System.out.println("Starting Deposit Zero Amount Test");
         int initialBalance = accountPage.getNumericBalance();
+        System.out.println("Initial Balance: " + initialBalance);
         accountPage.deposit(CustomerTestData.ZERO_DEPOSIT_AMOUNT);
         int updatedBalance = accountPage.getNumericBalance();
-
+        System.out.println("Updated Balance: " + updatedBalance);
         Assertions.assertEquals(initialBalance, updatedBalance, "Balance should not change after '0' deposit");
     }
 
